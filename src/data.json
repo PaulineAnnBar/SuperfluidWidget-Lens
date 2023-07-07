@@ -6,7 +6,30 @@
       "imageURI": ""
     },
     "paymentDetails": {
-      "paymentOptions": []
+      "paymentOptions": [
+        {
+          "receiverAddress": "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22",
+          "chainId": 5,
+          "superToken": {
+            "address": "0x8ae68021f6170e5a766be613cea0d75236ecca9a"
+          },
+          "flowRate": {
+            "amountEther": "1",
+            "period": "month"
+          }
+        },
+        {
+          "receiverAddress": "0xeDa1dfd4a051b4ef421132fCd6d107294Ca13EBf",
+          "superToken": {
+            "address": "0x42bb40bf79730451b11f6de1cba222f17b87afd7"
+          },
+          "chainId": 80001,
+          "flowRate": {
+            "amountEther": "123",
+            "period": "month"
+          }
+        }
+      ]
     },
     "layout": "page",
     "theme": {

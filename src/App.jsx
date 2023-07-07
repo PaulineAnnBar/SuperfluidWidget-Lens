@@ -12,7 +12,7 @@ export default function App() {
       <WagmiConfig config={wagmiConfig}>
         <RainbowKitProvider chains={chains}>
           <>
-            <ConnectButton>
+            <ConnectButton.Custom>
               {({ openConnectModal, connectModalOpen }) => {
                 const walletManager = {
                   open: async () => openConnectModal(),
@@ -27,13 +27,15 @@ export default function App() {
                       walletManager={walletManager}
                     >
                       {({ openModal }) => (
-                        <button onClick={() => openModal()}>Dialog</button>
+                        <button className="button" onClick={() => openModal()}>
+                          Dialog
+                        </button>
                       )}
                     </SuperfluidWidget>
                   </>
                 );
               }}
-            </ConnectButton>
+            </ConnectButton.Custom>
           </>
         </RainbowKitProvider>
       </WagmiConfig>
