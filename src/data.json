@@ -1,0 +1,53 @@
+{
+  "data": {
+    "productDetails": {
+      "name": "Pauline-subscription",
+      "description": "Dapp to use Superfluid Subscriptions widget to allow you to start fUSDCx streams to people on Mumbai testnet only if they (the recipient) hold a Lens handle.",
+      "imageURI": ""
+    },
+    "paymentDetails": {
+      "paymentOptions": []
+    },
+    "layout": "page",
+    "theme": {
+      "typography": {
+        "fontFamily": "'Noto Sans', 'sans-serif'"
+      },
+      "palette": {
+        "mode": "light",
+        "primary": {
+          "main": "#1DB227"
+        },
+        "secondary": {
+          "main": "#171414"
+        }
+      },
+      "shape": {
+        "borderRadius": 20
+      },
+      "components": {
+        "MuiStepIcon": {
+          "styleOverrides": {
+            "text": {
+              "fill": "#171414"
+            }
+          }
+        },
+        "MuiOutlinedInput": {
+          "styleOverrides": {
+            "root": {
+              "borderRadius": 10
+            }
+          }
+        },
+        "MuiButton": {
+          "styleOverrides": {
+            "root": {
+              "borderRadius": 10
+            }
+          }
+        }
+      }
+    }
+  }
+}
