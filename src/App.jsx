@@ -132,7 +132,8 @@ export default function App() {
                   } else {
                     return (
                       <div className="Lens-condition">
-                        You need to have a Lens profile to use this widget
+                        You need to have a Lens profile to use this Superfluid
+                        widget
                       </div>
                     );
                   }
