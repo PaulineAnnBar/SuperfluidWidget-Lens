@@ -7,52 +7,37 @@ import { wagmiConfig, chains } from "./wagmi.js";
 import { LensProvider } from "@lens-protocol/react-web";
 import { data } from "./data.json";
 import { lensConfig } from "./lens-config";
+import { useAccount } from "wagmi";
+import { useProfilesOwnedBy } from "@lens-protocol/react-web";
+
+import "./App.css";
+import { useEffect } from "react";
 
 export default function App() {
-  // const [profile, setProfile] = useState(null);
+  const { account } = useAccount();
+  const { data: profiles } = useProfilesOwnedBy({
+    address: account,
+  });
 
-  // useEffect(() => {
-  //   const fetchProfiles = async () => {
-  //     const profilesByHandle = await lensClient.profile.fetchAll({
-  //       handles: ["pukkynext.test"],
-  //     });
+  useEffect(() => {
+    const checkProfile = async () => {
+      try {
+        if (profiles.length > 0) {
+          // Wallet address has a Lens profile
+          console.log("Lens profile found for this address.");
+        } else {
+          // Wallet address does not have a Lens profile
+          console.log("No Lens profile found for this address.");
+        }
+      } catch (error) {
+        console.error("Error checking Lens profile:", error);
+      }
+    };
 
-  //     // console.log(
-  //     //   `Profiles fetched by handles: `,
-  //     //   profilesByHandle.items.map((i) => ({ id, handle }))
-  //     // );
-
-  //     if (profilesByHandle.length === 0) {
-  //       throw new Error("You must have a Lens Handle");
-  //     }
-  //     setProfile(profilesByHandle[0]);
-  //   };
-  //   fetchProfiles();
-  // }, []);
-
-  // if (!profile) {
-  //   return null;
-  // }
-
-  // const customPaymentDetails = data.paymentDetails.paymentOptions.filter(
-  //   (receiverAddress) => {
-  //     return {
-  //       ...option,
-  //       receiverAddress: profile.handles,
-  //     };
-  //   }
-  // );
-  // const customPaymentDetails = data.paymentDetails.paymentOptions.map(
-  //   (option) => {
-  //     if (option.receiverAddress !== profile.handles) {
-  //       throw new Error("Invalid receiver address");
-  //     }
-  //     return {
-  //       ...option,
-  //       receiverAddress: profile.handles,
-  //     };
-  //   }
-  // );
+    if (account) {
+      checkProfile();
+    }
+  }, [account, profiles]);
 
   return (
     <>
@@ -73,7 +58,9 @@ export default function App() {
                         tokenList={superTokenList}
                         type="dialog"
                         walletManager={walletManager}
-                        //={customPaymentDetails}
+                        // paymentDetails={{
+                        //   paymentOptions: customPaymentDetails,
+                        // }}
                       >
                         {({ openModal }) => (
                           <button
