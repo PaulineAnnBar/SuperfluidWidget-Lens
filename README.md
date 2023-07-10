@@ -1,7 +1,7 @@
 # Superfluid Subscription Widget
 Superfluid Subscription Widget for Lens handle holders
 
-Today tutorial will teach you to use the Superfluid subscription wallet with a Vite/ react app. You will be able to make a stream and I will show you how to restrict the payment option for .Lens handle holders only.
+this repo will demonstrate how to use the Superfluid subscription wallet with a Vite/ react app. You will be able to make a stream and I will show you how to restrict the payment option for .Lens handle holders only.
 
 We will use Polygon Mumbai for this example.
 
