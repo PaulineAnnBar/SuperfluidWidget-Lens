@@ -1,84 +1,61 @@
-import "./App.css";
-import SuperfluidWidget from "@superfluid-finance/widget";
-import { WagmiConfig } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import superTokenList from "@superfluid-finance/tokenlist";
-import { ConnectButton, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { wagmiConfig, chains } from "./wagmi.js";
-import { LensProvider } from "@lens-protocol/react-web";
-import { data } from "./data.json";
-import { lensConfig } from "./lens-config";
-import { useAccount } from "wagmi";
-import { useProfilesOwnedBy } from "@lens-protocol/react-web";
-
+import SuperfluidWidget from "@superfluid-finance/widget";
 import "./App.css";
-import { useEffect } from "react";
+import { data } from "./data.json";
+import Modal from "./Modal";
 
 export default function App() {
-  const { account } = useAccount();
-  const { data: profiles } = useProfilesOwnedBy({
-    address: account,
-  });
+  //with the SDK if widget doesnt work
+  // async function executeFlow(receiver) {
+  //   try {
+  //     const profileReceiver = await fetchProfiles(receiver);
+  //     if (profileReceiver) {
+  //       await flowOp.exec({ signer });
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error: ${error}`);
+  //   }
+  // }
 
-  useEffect(() => {
-    const checkProfile = async () => {
-      try {
-        if (profiles.length > 0) {
-          // Wallet address has a Lens profile
-          console.log("Lens profile found for this address.");
-        } else {
-          // Wallet address does not have a Lens profile
-          console.log("No Lens profile found for this address.");
-        }
-      } catch (error) {
-        console.error("Error checking Lens profile:", error);
-      }
-    };
-
-    if (account) {
-      checkProfile();
-    }
-  }, [account, profiles]);
+  // // Call executeFlow function with receiver's address
+  // executeFlow("0x42bb40bf79730451b11f6de1cba222f17b87afd7");
 
   return (
     <>
-      <WagmiConfig config={wagmiConfig}>
-        <LensProvider config={lensConfig}>
-          <RainbowKitProvider chains={chains}>
+      <ConnectButton.Custom>
+        {({ openConnectModal, connectModalOpen }) => {
+          const walletManager = {
+            open: async () => openConnectModal(),
+            isOpen: connectModalOpen,
+          };
+          return (
             <>
-              <ConnectButton.Custom>
-                {({ openConnectModal, connectModalOpen }) => {
-                  const walletManager = {
-                    open: async () => openConnectModal(),
-                    isOpen: connectModalOpen,
-                  };
-                  return (
-                    <>
-                      <SuperfluidWidget
-                        {...data}
-                        tokenList={superTokenList}
-                        type="dialog"
-                        walletManager={walletManager}
-                        // paymentDetails={{
-                        //   paymentOptions: customPaymentDetails,
-                        // }}
-                      >
-                        {({ openModal }) => (
-                          <button
-                            className="button"
-                            onClick={() => openModal()}
-                          >
-                            Open Superfluid widget
-                          </button>
-                        )}
-                      </SuperfluidWidget>
-                    </>
-                  );
-                }}
-              </ConnectButton.Custom>
+              <div className="modal">
+                <Modal></Modal>
+              </div>
+              <SuperfluidWidget
+                {...data}
+                tokenList={superTokenList}
+                type="dialog"
+                walletManager={walletManager}
+              >
+                {({ openModal }) => (
+                  <button
+                    className="button"
+                    onClick={() => {
+                      openModal();
+                      //executeFlow();
+                    }}
+                  >
+                    Open Superfluid widget
+                  </button>
+                )}
+              </SuperfluidWidget>
             </>
-          </RainbowKitProvider>
-        </LensProvider>
-      </WagmiConfig>
+          );
+        }}
+      </ConnectButton.Custom>
     </>
   );
 }

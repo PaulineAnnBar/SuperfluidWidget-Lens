@@ -1,37 +1,26 @@
 {
   "data": {
     "productDetails": {
-      "name": "Pauline-subscription",
-      "description": "Dapp to use Superfluid Subscriptions widget to allow you to start fUSDCx streams to people on Mumbai testnet only if they (the recipient) hold a Lens handle.",
+      "name": "Pauline lens",
+      "description": "",
       "imageURI": ""
     },
     "paymentDetails": {
       "paymentOptions": [
         {
-          "receiverAddress": "0xf26ce9749f29e61c25d0333bce2301cb2dfd3a22",
-          "chainId": 5,
-          "superToken": {
-            "address": "0x8ae68021f6170e5a766be613cea0d75236ecca9a"
-          },
-          "flowRate": {
-            "amountEther": "1",
-            "period": "month"
-          }
-        },
-        {
-          "receiverAddress": "0xeDa1dfd4a051b4ef421132fCd6d107294Ca13EBf",
+          "receiverAddress": "0x9aC19e8FfF9fa6B3F74E349D81E9F80C3e2DB8A3",
           "superToken": {
             "address": "0x42bb40bf79730451b11f6de1cba222f17b87afd7"
           },
           "chainId": 80001,
           "flowRate": {
-            "amountEther": "123",
+            "amountEther": "1",
             "period": "month"
           }
         }
       ]
     },
-    "layout": "page",
+    "type": "page",
     "theme": {
       "typography": {
         "fontFamily": "'Noto Sans', 'sans-serif'"
@@ -42,7 +31,7 @@
           "main": "#1DB227"
         },
         "secondary": {
-          "main": "#171414"
+          "main": "#fff"
         }
       },
       "shape": {
@@ -52,7 +41,7 @@
         "MuiStepIcon": {
           "styleOverrides": {
             "text": {
-              "fill": "#171414"
+              "fill": "#fff"
             }
           }
         },

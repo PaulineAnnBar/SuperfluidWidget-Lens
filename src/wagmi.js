@@ -1,12 +1,14 @@
 import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { supportedNetworks } from "@superfluid-finance/widget";
-import { configureChains, createConfig } from "wagmi";
+
 import { publicProvider } from "wagmi/providers/public";
+import { configureChains, createConfig } from "wagmi";
 
 const walletConnectProjectId = "694779f224954bad53ccef66a54e3806";
 
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
   supportedNetworks,
+
   [publicProvider()]
 );
 
@@ -22,3 +24,9 @@ export const wagmiConfig = createConfig({
   publicClient,
   webSocketPublicClient,
 });
+
+// export const sf = await Framework.create({
+//   networkName: "ethereum",
+//   chainId: 1,
+//   provider: publicProvider,
+// });
