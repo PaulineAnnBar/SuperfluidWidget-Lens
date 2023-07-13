@@ -24,9 +24,3 @@ export const wagmiConfig = createConfig({
   publicClient,
   webSocketPublicClient,
 });
-
-// export const sf = await Framework.create({
-//   networkName: "ethereum",
-//   chainId: 1,
-//   provider: publicProvider,
-// });

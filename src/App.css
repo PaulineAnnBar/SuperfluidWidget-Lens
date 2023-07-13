@@ -7,11 +7,9 @@
 }
 
 .input-field {
-  width: 180px;
+  width: 200px;
+  height: 25px;
 }
-
-.modal {
-  display: flex;
-  color: "black";
-  width: 900px;
+.button {
+  color: "7fff00";
 }
