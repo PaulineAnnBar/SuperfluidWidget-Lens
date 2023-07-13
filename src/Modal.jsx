@@ -4,73 +4,57 @@ import { useEffect, useState } from "react";
 // import superTokenList from "@superfluid-finance/tokenlist";
 // import { data } from "./data.json";
 import { LensClient, production } from "@lens-protocol/client";
+import { ethers } from "ethers";
 
 export const Modal = () => {
-  const [receiverAddress, setReceiverAddress] = useState(
-    "0xc2564e41B7F5Cb66d2d99466450CfebcE9e8228f"
-  );
-
-  // const [receiverAddress, setReceiverAddress] = useState("");
-  // const [hasCheckedProfile, setHasCheckedProfile] = useState(null);
-
-  // const { data: profiles, loading } = useProfilesOwnedBy({
-  //   address: receiverAddress,
-  // });
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     console.log("Loading...");
-  //   } else if (!profiles) {
-  //     setHasCheckedProfile(false);
-  //   } else if (profiles[0]) {
-  //     console.log("Profile:", profiles[0]);
-  //     setHasCheckedProfile(true);
-  //   } else {
-  //     console.log("No profile found");
-  //     setHasCheckedProfile(true);
-  //   }
-  // }, [loading, profiles]);
-
-  const handleInputChange = (event) => {
-    setReceiverAddress(event.target.value);
-    console.log(event.target.value);
-  };
-
-  // const renderProfileMessage = () => {
-  //   if (!hasCheckedProfile) {
-  //     return "";
-  //   } else if (profiles && profiles[0]) {
-  //     return (
-  //       <p style={{ margin: "10px", color: "green", borderColor: "green" }}>
-  //         Profile found🌿
-  //       </p>
-  //     );
-  //   } else {
-  //     return <p>Sorry you need a Lens profile!</p>;
-  //   }
-  // };
+  const [receiverAddress, setReceiverAddress] = useState("");
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [hasCheckedProfile, setHasCheckedProfile] = useState(false);
+  const [hasCheckedProfile, setHasCheckedProfile] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProfiles = async () => {
+    const run = async () => {
       setLoading(true);
       const lensClient = new LensClient({
         environment: production,
       });
 
-      const allOwnedProfiles = await lensClient.profile.fetchAll({
-        ownedBy: [receiverAddress],
-      });
-
-      setProfiles(allOwnedProfiles.items);
-      setHasCheckedProfile(allOwnedProfiles.items.count > 0);
+      if (receiverAddress) {
+        const allOwnedProfiles = await lensClient.profile.fetchAll({
+          ownedBy: [receiverAddress],
+        });
+        setProfiles(allOwnedProfiles.items);
+        console.log(allOwnedProfiles.items);
+        if (allOwnedProfiles.items.length > 0) {
+          setHasCheckedProfile(true);
+        } else {
+          setHasCheckedProfile(false);
+        }
+      }
       setLoading(false);
     };
 
-    void fetchProfiles();
+    void run();
   }, [receiverAddress]);
+
+  const validateEthAddress = (address) => {
+    if (!ethers.utils.isAddress(address)) {
+      //setError('Invalid Ethereum address');
+      console.log("Invalid Ethereum address");
+      setReceiverAddress("");
+      setHasCheckedProfile(false);
+    } else {
+      console.log("Valid Ethereum address");
+      console.log(address);
+      setReceiverAddress(address);
+      //setError(null);
+    }
+  };
+
+  const handleChange = (event) => {
+    validateEthAddress(event.target.value);
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -83,6 +67,8 @@ export const Modal = () => {
           padding: "10px",
           width: "300px",
           height: "300px",
+          background: "beige",
+          borderRadius: "40px",
         }}
       >
         <h3
@@ -97,27 +83,26 @@ export const Modal = () => {
           className="input-field"
           type="text"
           placeholder="your recipient address here..."
-          onChange={handleInputChange}
+          onChange={handleChange}
         />
-        {/* {renderProfileMessage()} */}
+
+        {hasCheckedProfile === null ? (
+          ""
+        ) : hasCheckedProfile ? (
+          <p
+            style={{
+              margin: "10px",
+              color: "green",
+              borderColor: "green",
+            }}
+          >
+            Profile found🌿
+          </p>
+        ) : (
+          <p>You need a Lens profile!</p>
+        )}
       </div>
-      {hasCheckedProfile === false ? (
-        <p>Loading...</p>
-      ) : hasCheckedProfile ? (
-        <p
-          style={{
-            margin: "10px",
-            color: "green",
-            borderColor: "green",
-          }}
-        >
-          Profile found🌿
-        </p>
-      ) : (
-        <p>Sorry you need a Lens profile!</p>
-      )}
     </>
   );
 };
-
 export default Modal;

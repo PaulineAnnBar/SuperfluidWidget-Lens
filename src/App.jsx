@@ -17,8 +17,11 @@ export default function App() {
           return (
             <>
               <div className="modal">
-                <Modal></Modal>
+                <div className="modal" style={{ marginBottom: "20px" }}>
+                  <Modal />
+                </div>
               </div>
+
               <SuperfluidWidget
                 {...data}
                 tokenList={superTokenList}
@@ -27,10 +30,9 @@ export default function App() {
               >
                 {({ openModal }) => (
                   <button
-                    className="button"
+                    style={{ color: "green", background: "beige" }}
                     onClick={() => {
                       openModal();
-                      //executeFlow();
                     }}
                   >
                     Open Superfluid widget
