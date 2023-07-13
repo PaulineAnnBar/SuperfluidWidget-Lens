@@ -1,8 +1,5 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-// import SuperfluidWidget from "@superfluid-finance/widget";
-// import superTokenList from "@superfluid-finance/tokenlist";
-// import { data } from "./data.json";
 import { LensClient, production } from "@lens-protocol/client";
 import { ethers } from "ethers";
 
@@ -11,7 +8,6 @@ export const Modal = () => {
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasCheckedProfile, setHasCheckedProfile] = useState(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const run = async () => {
@@ -48,7 +44,6 @@ export const Modal = () => {
       console.log("Valid Ethereum address");
       console.log(address);
       setReceiverAddress(address);
-      //setError(null);
     }
   };
 
